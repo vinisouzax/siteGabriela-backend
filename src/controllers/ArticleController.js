@@ -1,0 +1,140 @@
+const Article = require('../models/Article');
+
+module.exports = {
+    async store(req, res){
+        const { title, txt_dsc, subject, content } = req.body;
+
+        const article = await Article.create({
+            title,
+            txt_dsc,
+            subject,
+            content
+        });
+
+        if (!article) {
+            return res.json({ 
+                result: [], 
+                message: "It was not possible to store this article!" });  
+        }else{
+            await article.populate('subject').populate('content').execPopulate();
+
+            return res.json({ 
+                result: [{
+                    title, 
+                    txt_dsc,
+                    subject_id: article.subject.id,
+                    subject_name: article.subject.name,
+                    content_id: article.content.id,
+                    content_name: article.content.name
+                }], 
+                message: true });          
+        }
+    },
+
+    async index(req, res) {
+        const article = await Article.find();
+
+        let result = new Array();
+
+        if(!article){   
+            return res.json({ 
+                result, 
+                message: "No articles" }); 
+        }else{
+            article.forEach(function(i){
+                result.push({
+                    title: i.title, 
+                    txt_dsc: i.txt_dsc, 
+                    article_id: i.id,
+                    subject_id: i.subject_id,
+                    subject_name: i.subject_name,
+                    content_id: article.content.id,
+                    content_name: article.content.name,
+                    active: i.active 
+                });
+            });
+
+            return res.json({ 
+                result, 
+                message: true });
+        }
+    },
+
+    async update(req, res) {
+        const { id } = req.params, { title, txt_dsc, subject, content } = req.body;
+
+        const article = await Article.updateOne(
+            {_id: id}, {title, txt_dsc, subject, content});
+
+        if(!article){
+            return res.json({ 
+                result: [], 
+                message: "It was not possible the update!" });  
+        }else{
+            return res.json({ 
+                result: [{
+                    title,
+                    txt_dsc,
+                    article_id: id,
+                    subject,
+                    content
+                }], 
+                message: true });          
+        }
+    },
+
+    async show(req, res){
+        const { id } = req.params;
+
+        let article = await Article.findOne({ _id: id });
+
+        if(!article){
+            return res.json({ result: [], message: "article does not exists!" });
+        }else{
+            await article.populate('subject').populate('content').execPopulate();
+
+            return res.json({ 
+                result: [{ 
+                    title: article.title, 
+                    txt_dsc: article.txt_dsc,
+                    article_id: article.id,
+                    subject_id: article.subject.id,
+                    subject_name: article.subject.name,
+                    content_id: article.content.id,
+                    content_name: article.content.name,
+                    views: (article.views+1),
+                    active: article.active
+                }], 
+                message: true });
+        }
+
+    },
+
+    async destroy(req, res) {
+
+        const { id } = req.params;
+
+        let articleFind = await Article.findOne({ _id: id });
+
+        if(!articleFind){
+            return res.json({ result: [], message: "article does not exists!" });
+        }else{
+            const article = await Article.updateOne(
+                { _id: id }, {active: !articleFind.active});
+
+            if(!article){
+                return res.json({ 
+                    result: [], 
+                    message: "It was not possible to delete this article!" });  
+    
+            }else{
+                return res.json({ 
+                    result: [{
+                        article
+                    }], 
+                    message: true });          
+            }
+        }
+
+    }
+};
