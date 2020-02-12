@@ -106,7 +106,6 @@ module.exports = {
                     content_id: content.id,
                     subject_id: content.subject.id,
                     subject_name: content.subject.name,
-                    views: (content.views+1),
                     active: content.active
                 }], 
                 message: true });

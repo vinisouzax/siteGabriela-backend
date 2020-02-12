@@ -2,11 +2,10 @@ const Article = require('../models/Article');
 
 module.exports = {
     async store(req, res){
-        const { title, txt_dsc, subject, content } = req.body;
+        const { name, subject, content } = req.body;
 
         const article = await Article.create({
-            title,
-            txt_dsc,
+            name,
             subject,
             content
         });
@@ -20,8 +19,7 @@ module.exports = {
 
             return res.json({ 
                 result: [{
-                    title, 
-                    txt_dsc,
+                    name, 
                     subject_id: article.subject.id,
                     subject_name: article.subject.name,
                     content_id: article.content.id,
@@ -43,8 +41,7 @@ module.exports = {
         }else{
             article.forEach(function(i){
                 result.push({
-                    title: i.title, 
-                    txt_dsc: i.txt_dsc, 
+                    name: i.name, 
                     article_id: i.id,
                     subject_id: i.subject_id,
                     subject_name: i.subject_name,
@@ -61,10 +58,10 @@ module.exports = {
     },
 
     async update(req, res) {
-        const { id } = req.params, { title, txt_dsc, subject, content } = req.body;
+        const { id } = req.params, { name, subject, content } = req.body;
 
         const article = await Article.updateOne(
-            {_id: id}, {title, txt_dsc, subject, content});
+            {_id: id}, {name, subject, content});
 
         if(!article){
             return res.json({ 
@@ -73,8 +70,7 @@ module.exports = {
         }else{
             return res.json({ 
                 result: [{
-                    title,
-                    txt_dsc,
+                    name,
                     article_id: id,
                     subject,
                     content
@@ -95,14 +91,12 @@ module.exports = {
 
             return res.json({ 
                 result: [{ 
-                    title: article.title, 
-                    txt_dsc: article.txt_dsc,
+                    name: article.name, 
                     article_id: article.id,
                     subject_id: article.subject.id,
                     subject_name: article.subject.name,
                     content_id: article.content.id,
                     content_name: article.content.name,
-                    views: (article.views+1),
                     active: article.active
                 }], 
                 message: true });

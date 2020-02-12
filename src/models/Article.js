@@ -1,7 +1,7 @@
 const moongose = require('mongoose');
 
 const ArticleSchema = new moongose.Schema({
-    title: {
+    name: {
         type: String,
         required: true
     }, 
@@ -15,7 +15,6 @@ const ArticleSchema = new moongose.Schema({
         default: true,
         required: true
     },
-    txt_dsc: String,
     subject:{
         type: moongose.Schema.Types.ObjectId,
         ref: 'Subject'
@@ -23,10 +22,6 @@ const ArticleSchema = new moongose.Schema({
     content:{
         type: moongose.Schema.Types.ObjectId,
         ref: 'Content'
-    },     
-    views: {
-        type: Number,
-        default: 0
     }
 });
 
