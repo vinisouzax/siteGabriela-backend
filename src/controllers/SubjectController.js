@@ -8,7 +8,11 @@ module.exports = {
 
         if(!subject){
             subject = await Subject.create({ name });
-            return res.json({ result: [{ subject }], message: true });
+            return res.json({
+                result: [{ 
+                    subject 
+                }], 
+                message: true });
         }else{
             return res.json({ result: [], message: "This subject already exists!" });
         }
@@ -25,7 +29,11 @@ module.exports = {
                 message: "No Subjects" }); 
         }else{
             subject.forEach(function(i){
-                result.push({name: i.name, subject_id: i.id, active: i.active });
+                result.push({
+                    name: i.name, 
+                    subject_id: i.id, 
+                    active: i.active 
+                });
             });
 
             return res.json({ 

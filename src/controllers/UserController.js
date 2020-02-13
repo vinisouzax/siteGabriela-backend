@@ -42,7 +42,11 @@ module.exports = {
                 message: "No users" });  
         }else{
             user.forEach(function(i){
-                result.push({name: i.name, user_id: i.id, active: i.active });
+                result.push({
+                    name: i.name, 
+                    user_id: i.id, 
+                    active: i.active 
+                });
             });
 
             return res.json({ 
@@ -62,7 +66,9 @@ module.exports = {
                 message: "It was not possible the update!" });  
         }else{
             return res.json({ 
-                result: [{user}], 
+                result: [{
+                    user
+                }], 
                 message: true });          
         }
     },

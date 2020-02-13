@@ -20,6 +20,7 @@ module.exports = {
             return res.json({ 
                 result: [{
                     name, 
+                    article_id: article.id,
                     subject_id: article.subject.id,
                     subject_name: article.subject.name,
                     content_id: article.content.id,

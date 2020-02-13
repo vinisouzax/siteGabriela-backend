@@ -24,6 +24,7 @@ module.exports = {
             return res.json({ 
                 result: [{
                     name, 
+                    content_id: content.id,
                     subject_id: content.subject.id,
                     subject_name: content.subject.name,
                     image: content.image
