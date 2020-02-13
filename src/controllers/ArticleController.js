@@ -30,7 +30,8 @@ module.exports = {
     },
 
     async index(req, res) {
-        const article = await Article.find();
+        const article = await Article.find()
+        .populate({ path: 'subject' }).populate({ path: 'content' }).exec();
 
         let result = new Array();
 
@@ -43,10 +44,10 @@ module.exports = {
                 result.push({
                     name: i.name, 
                     article_id: i.id,
-                    subject_id: i.subject_id,
-                    subject_name: i.subject_name,
-                    content_id: article.content.id,
-                    content_name: article.content.name,
+                    subject_id: i.subject.id,
+                    subject_name: i.subject.name,
+                    content_id: i.content.id,
+                    content_name: i.content.name,
                     active: i.active 
                 });
             });
