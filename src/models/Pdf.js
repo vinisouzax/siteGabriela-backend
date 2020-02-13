@@ -1,7 +1,7 @@
 const moongose = require('mongoose');
 
 const PdfSchema = new moongose.Schema({
-    title: {
+    name: {
         type: String,
         required: true
     }, 
@@ -27,6 +27,15 @@ const PdfSchema = new moongose.Schema({
         type: Number,
         default: 0
     }   
+}, {
+    toJSON:{
+        virtuals: true,
+    }
 });
+
+PdfSchema.virtual('pdf_url').get(function(){
+    return `http://localhost:3333/files/${this.name}`
+});
+
 
 module.exports = moongose.model('Pdf', PdfSchema);

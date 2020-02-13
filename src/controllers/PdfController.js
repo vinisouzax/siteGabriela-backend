@@ -2,17 +2,17 @@ const Pdf = require('../models/Pdf');
 
 module.exports = {
     async store(req, res){
-        const { subject } = req.body;
+        const { article } = req.body;
 
         let pdfs = '';
 
         for(let i = 0; i < req.files.length; i++){
             pdf = await Pdf.create({
-                title: req.files[i].filename,
+                name: req.files[i].filename,
                 link: req.files[i].filename,
-                subject: subject
+                article: article
             });
-            pdfs += `${pdf.title};`;
+            pdfs += `${pdf.name};`;
         }
 
         if (!pdf) {
@@ -29,23 +29,25 @@ module.exports = {
         }
     },
 
-    /*async index(req, res) {
-        const { subject } = req.body;
-        const article = await Article.find({ subject });
+    async index(req, res) {
+        const { article } = req.body;
+        const pdfs = await Pdf.find({ article })
+        .populate({ path: 'article' }).exec();
 
         let result = new Array();
 
-        if(!article){   
+        if(!pdfs){   
             return res.json({ 
                 result, 
-                message: "No articles" }); 
+                message: "No pdfs" }); 
         }else{
-            article.forEach(function(i){
+            pdfs.forEach(function(i){
                 result.push({
-                    title: i.title, 
-                    txt_dsc: i.txt_dsc, 
-                    article_id: i.id,
-                    subject,
+                    name: i.name, 
+                    pdf_url: i.pdf_url, 
+                    pdf_id: i.id,
+                    pdf_id: i.id,
+                    article_id: i.article.id,
                     active: i.active 
                 });
             });
@@ -55,7 +57,7 @@ module.exports = {
                 message: true });
         }
     },
-
+    /*
     async update(req, res) {
         const { id } = req.params, { title, txt_dsc, subject } = req.body;
 
