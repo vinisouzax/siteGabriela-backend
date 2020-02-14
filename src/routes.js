@@ -27,6 +27,8 @@ routes.get('/contents', ContentController.index);
 routes.get('/articles', ArticleController.index);
 routes.get('/articles/:id', ArticleController.show);
 
+routes.get('/pdfs/:id', PdfController.index);
+
 routes.use(authenticateToken);
 
 routes.get('/users', UserController.index);

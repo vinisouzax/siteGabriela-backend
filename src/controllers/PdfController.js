@@ -30,12 +30,11 @@ module.exports = {
     },
 
     async index(req, res) {
-        const { article } = req.body;
-        const pdfs = await Pdf.find({ article })
+        const { id } = req.params;
+        const pdfs = await Pdf.find({ article: id })
         .populate({ path: 'article' }).exec();
 
         let result = new Array();
-
         if(!pdfs){   
             return res.json({ 
                 result, 
@@ -45,7 +44,6 @@ module.exports = {
                 result.push({
                     name: i.name, 
                     pdf_url: i.pdf_url, 
-                    pdf_id: i.id,
                     pdf_id: i.id,
                     article_id: i.article.id,
                     active: i.active 
