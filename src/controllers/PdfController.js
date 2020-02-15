@@ -46,7 +46,8 @@ module.exports = {
                     pdf_url: i.pdf_url, 
                     pdf_id: i.id,
                     article_id: i.article.id,
-                    active: i.active 
+                    active: i.active,
+                    views: i.views,
                 });
             });
 
@@ -55,28 +56,26 @@ module.exports = {
                 message: true });
         }
     },
-    /*
+    
     async update(req, res) {
-        const { id } = req.params, { title, txt_dsc, subject } = req.body;
+        const { id } = req.params, { views } = req.body;
 
-        const article = await Article.updateOne({_id: id}, {title, txt_dsc, subject});
+        const pdf = await Pdf.updateOne({_id: id}, {views});
 
-        if(!article){
+        if(!pdf){
             return res.json({ 
                 result: [], 
                 message: "It was not possible the update!" });  
         }else{
             return res.json({ 
                 result: [{
-                    title,
-                    txt_dsc,
-                    article_id: id,
-                    subject
+                    pdf_id: id,
+                    views
                 }], 
                 message: true });          
         }
     },
-
+/*
     async show(req, res){
         const { id } = req.params;
 

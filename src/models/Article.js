@@ -22,6 +22,10 @@ const ArticleSchema = new moongose.Schema({
     content:{
         type: moongose.Schema.Types.ObjectId,
         ref: 'Content'
+    },
+    user:{
+        type: moongose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

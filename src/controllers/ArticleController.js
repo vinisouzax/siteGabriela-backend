@@ -2,12 +2,13 @@ const Article = require('../models/Article');
 
 module.exports = {
     async store(req, res){
-        const { name, subject, content } = req.body;
+        const { name, subject, content, user } = req.body;
 
         const article = await Article.create({
             name,
             subject,
-            content
+            content,
+            user
         });
 
         if (!article) {
@@ -15,7 +16,8 @@ module.exports = {
                 result: [], 
                 message: "It was not possible to store this article!" });  
         }else{
-            await article.populate('subject').populate('content').execPopulate();
+            await article.populate('subject')
+            .populate('content').populate('user').execPopulate();
 
             return res.json({ 
                 result: [{
@@ -24,7 +26,9 @@ module.exports = {
                     subject_id: article.subject.id,
                     subject_name: article.subject.name,
                     content_id: article.content.id,
-                    content_name: article.content.name
+                    content_name: article.content.name,
+                    user_id: article.user.id,
+                    user_name: article.user.name
                 }], 
                 message: true });          
         }
@@ -32,7 +36,9 @@ module.exports = {
 
     async index(req, res) {
         const article = await Article.find()
-        .populate({ path: 'subject' }).populate({ path: 'content' }).exec();
+        .populate({ path: 'subject' })
+        .populate({ path: 'content' })
+        .populate({ path: 'user' }).exec();
 
         let result = new Array();
 
@@ -49,6 +55,8 @@ module.exports = {
                     subject_name: i.subject.name,
                     content_id: i.content.id,
                     content_name: i.content.name,
+                    user_id: i.user.id,
+                    user_name: i.user.name,
                     active: i.active 
                 });
             });
@@ -89,7 +97,9 @@ module.exports = {
         if(!article){
             return res.json({ result: [], message: "article does not exists!" });
         }else{
-            await article.populate('subject').populate('content').execPopulate();
+            await article.populate('subject')
+            .populate('content')
+            .populate('user').execPopulate();
 
             return res.json({ 
                 result: [{ 
@@ -99,6 +109,8 @@ module.exports = {
                     subject_name: article.subject.name,
                     content_id: article.content.id,
                     content_name: article.content.name,
+                    user_id: article.user.id,
+                    user_name: article.user.name,
                     active: article.active
                 }], 
                 message: true });
