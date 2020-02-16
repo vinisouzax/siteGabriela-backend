@@ -53,7 +53,6 @@ routes.delete('/articles/:id', ArticleController.destroy);
 routes.post('/pdfs', upload.array('pdfs'), PdfController.store);
 routes.delete('/pdfs/:id', PdfController.destroy);
 
-
 function authenticateToken(req, res, nex){
     const token = req.headers['authorization'];
 
