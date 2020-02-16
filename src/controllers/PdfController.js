@@ -75,57 +75,25 @@ module.exports = {
                 message: true });          
         }
     },
-/*
-    async show(req, res){
-        const { id } = req.params;
-
-        let article = await Article.findOne({ _id: id });
-
-        if(!article){
-            return res.json({ result: [], message: "article does not exists!" });
-        }else{
-            await article.populate('subject').execPopulate();
-
-            return res.json({ 
-                result: [{ 
-                    title: article.title, 
-                    txt_dsc: article.txt_dsc,
-                    article_id: article.id,
-                    subject_id: article.subject.id,
-                    subject_name: article.subject.name,
-                    views: (article.views+1),
-                    active: article.active
-                }], 
-                message: true });
-        }
-
-    },
-
     async destroy(req, res) {
 
         const { id } = req.params;
 
-        let articleFind = await Article.findOne({ _id: id });
+        const pdf = await Pdf.deleteOne({
+            _id: id
+        });
 
-        if(!articleFind){
-            return res.json({ result: [], message: "article does not exists!" });
+        if(!pdf){
+            return res.json({ 
+                result: [], 
+                message: "It was not possible to delete this pdf!" });  
+
         }else{
-            const article = await Article.updateOne(
-                { _id: id }, {active: !articleFind.active});
-
-            if(!article){
-                return res.json({ 
-                    result: [], 
-                    message: "It was not possible to delete this article!" });  
-    
-            }else{
-                return res.json({ 
-                    result: [{
-                        article
-                    }], 
-                    message: true });          
-            }
+            return res.json({ 
+                result: [{
+                    pdf
+                }], 
+                message: true });          
         }
-
-    }*/
+    }
 };
