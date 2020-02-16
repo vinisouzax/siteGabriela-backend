@@ -15,7 +15,6 @@ const upload = multer(uploadConfig);
 require('dotenv').config()
 const jwt = require('jsonwebtoken');
 
-
 routes.post('/sessions', SessionController.login);
 
 routes.post('/users', UserController.store);
