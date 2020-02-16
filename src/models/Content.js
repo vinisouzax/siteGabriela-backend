@@ -31,7 +31,7 @@ const ContentSchema = new moongose.Schema({
 });
 
 ContentSchema.virtual('image_url').get(function(){
-    return `${process.env.FILES_URL}${this.name}`
+    return `${process.env.FILES_URL}${this.image}`
 });
 
 module.exports = moongose.model('Content', ContentSchema);
