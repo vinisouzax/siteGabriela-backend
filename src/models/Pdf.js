@@ -34,7 +34,7 @@ const PdfSchema = new moongose.Schema({
 });
 
 PdfSchema.virtual('pdf_url').get(function(){
-    return `http://localhost:3333/files/${this.name}`
+    return `${process.env.FILES_URL}${this.name}`
 });
 
 
