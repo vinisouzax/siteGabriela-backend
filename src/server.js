@@ -6,7 +6,7 @@ const path = require('path');
 
 const app = express();
 
-mongoose.connect('mongodb://siteGabriela:k1BI1eCxNwH06JAk@sitegabriela-shard-00-00-zfcux.mongodb.net:27017,sitegabriela-shard-00-01-zfcux.mongodb.net:27017,sitegabriela-shard-00-02-zfcux.mongodb.net:27017/test?ssl=true&replicaSet=siteGabriela-shard-0&authSource=admin&retryWrites=true&w=majority',{
+mongoose.connect(process.env.MONGO_URL, { 
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
