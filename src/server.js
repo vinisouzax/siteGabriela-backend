@@ -15,7 +15,8 @@ mongoose.connect(process.env.MONGO_URL, {
 //req.query = Acessar query params (para filtros)
 //req.params = Acessar route params (para edição, delete)
 //req.body = Acessar corpo da requisição (para criação, edição)
-app.use(cors({ origin: process.env.APP_URL, origin: process.env.APP_URL2 }));
+let allowedOrigins = [process.env.APP_URL, process.env.APP_URL2]
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json())
 app.use('/files', express.static(path.resolve(__dirname, '../', 'uploads')));
 app.use(routes);
