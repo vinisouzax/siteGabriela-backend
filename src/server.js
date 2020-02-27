@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const routes = require('./routes');
 const cors = require('cors');
 const path = require('path');
+const wakeUpDyno = require("./wokeDyno.js");
 
 const app = express();
 
@@ -21,4 +22,6 @@ app.use(express.json())
 app.use('/files', express.static(path.resolve(__dirname, '../', 'uploads')));
 app.use(routes);
 
-app.listen(process.env.PORT || 3333);
+app.listen(process.env.PORT || 3333, ()=>{
+    wakeUpDyno(process.env.APP_URL);
+});

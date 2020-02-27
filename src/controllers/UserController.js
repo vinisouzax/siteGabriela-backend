@@ -44,6 +44,8 @@ module.exports = {
             user.forEach(function(i){
                 result.push({
                     name: i.name, 
+                    email: i.email,
+                    permission: i.permission,
                     user_id: i.id, 
                     active: i.active 
                 });
@@ -88,6 +90,7 @@ module.exports = {
                     cpf_cnpj: user.cpf_cnpj, 
                     phone: user.phone, 
                     user_id: user.id,
+                    password: user.password,
                     permission: user.permission,
                     active: user.active
                 }], 
