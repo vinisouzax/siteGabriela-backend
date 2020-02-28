@@ -37,7 +37,7 @@ const wakeUpDyno = (url, interval = 28, callback) => {
                 finally {
                     // do it all again
                     const hours = new Date().getHours();
-                    interval = (hours > '08' && hours < '23') ? 28 : 540;
+                    interval = (hours > '09' && hours < '21') ? 28 : 540;
                     return wakeUpDyno(url, interval, callback);
                 }
                 
