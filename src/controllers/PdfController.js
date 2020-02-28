@@ -92,7 +92,7 @@ module.exports = {
                 message: "It was not possible to delete this pdf!" });  
 
         }else{
-            fs.unlink(`../../uploads/${pdfFind.name}`)
+            fs.unlink(`${pdfFind.pdf_url}`)
             return res.json({ 
                 result: [{
                     pdf
