@@ -1,5 +1,5 @@
 const Pdf = require('../models/Pdf');
-const fs = require('fs');
+//const fs = require('fs');
 
 module.exports = {
     async store(req, res){
@@ -80,8 +80,6 @@ module.exports = {
 
         const { id } = req.params;
 
-        const pdfFind = await Pdf.findOne({_id: id});
-
         const pdf = await Pdf.deleteOne({
             _id: id
         });
@@ -92,7 +90,6 @@ module.exports = {
                 message: "It was not possible to delete this pdf!" });  
 
         }else{
-            fs.unlinkSync(`${pdfFind.pdf_url}`)
             return res.json({ 
                 result: [{
                     pdf
