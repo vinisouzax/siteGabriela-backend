@@ -1,5 +1,5 @@
 const Pdf = require('../models/Pdf');
-const fs = require('fs');
+//const fs = require('fs');
 
 module.exports = {
     async store(req, res){
@@ -78,7 +78,7 @@ module.exports = {
     },
     async destroy(req, res) {
 
-        const { id } = req.params, { name } = req.body;
+        const { id } = req.params;
 
         const pdf = await Pdf.deleteOne({
             _id: id
@@ -90,19 +90,6 @@ module.exports = {
                 message: "It was not possible to delete this pdf!" });  
 
         }else{
-            fs.statSync(`../../uploads/${name}`, function (err, stats) {
-                console.log(stats);
-                
-                if (err) {
-                    return console.error(err);
-                }
-                
-                fs.unlinkSync(`../../uploads/${name}`,function(err){
-                        if(err) return console.log(err);
-                        console.log('Pdf deleted!');
-                });  
-            });
-
             return res.json({ 
                 result: [{
                     pdf
